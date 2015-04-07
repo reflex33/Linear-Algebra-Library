@@ -1,7 +1,8 @@
 # c# Matrix Library
-
-## v1.0 Initial build
-Nothing to say here... First release
+Library for using matrices
 
 ## TODO
 N/A
+
+## 4/7/2015
+Nothing to say here... First release
