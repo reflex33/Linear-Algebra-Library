@@ -750,6 +750,8 @@
                     filter_file.Close();
                 }
                 catch { }  // Nothing can be done
+
+                if (Changed != null) Changed(this, System.EventArgs.Empty);  // Inform the user that the matrix has changed
             }
         }
         public void set(int row, int col, double value)  // Sets a specific cell to a value
@@ -758,6 +760,7 @@
                 return;
 
             the_matrix[row, col] = value;
+            if (Changed != null) Changed(this, System.EventArgs.Empty);  // Inform the user that the matrix has changed
         }
 
         // Matrix status functions/properties
@@ -953,9 +956,11 @@
                     return;
 
                 // Copy data
-                set(0, 0, value.get(0, 0));
-                set(1, 0, value.get(1, 0));
-                set(2, 0, value.get(2, 0));
+                the_matrix[0, 0] = value.get(0, 0);
+                the_matrix[1, 0] = value.get(1, 0);
+                the_matrix[2, 0] = value.get(2, 0);
+
+                if (Changed != null) Changed(this, System.EventArgs.Empty);  // Inform the user that the matrix has changed
             }
         }
         public matrix y_axis_vector             // Gets/Sets the y axis vector (3x1 matrix) of a transformation matrix
@@ -979,9 +984,11 @@
                     return;
 
                 // Copy data
-                set(0, 1, value.get(0, 0));
-                set(1, 1, value.get(1, 0));
-                set(2, 1, value.get(2, 0));
+                the_matrix[0, 1] = value.get(0, 0);
+                the_matrix[1, 1] = value.get(1, 0);
+                the_matrix[2, 1] = value.get(2, 0);
+
+                if (Changed != null) Changed(this, System.EventArgs.Empty);  // Inform the user that the matrix has changed
             }
         }
         public matrix z_axis_vector             // Gets/Sets the y axis vector (3x1 matrix) of a transformation matrix
@@ -1005,9 +1012,11 @@
                     return;
 
                 // Copy data
-                set(0, 2, value.get(0, 0));
-                set(1, 2, value.get(1, 0));
-                set(2, 2, value.get(2, 0));
+                the_matrix[0, 2] = value.get(0, 0);
+                the_matrix[1, 2] = value.get(1, 0);
+                the_matrix[2, 2] = value.get(2, 0);
+
+                if (Changed != null) Changed(this, System.EventArgs.Empty);  // Inform the user that the matrix has changed
             }
         }
         public matrix position_vector           // Gets/Sets the position vector (3x1 matrix) of a transformation matrix
@@ -1031,9 +1040,11 @@
                     return;
 
                 // Copy data
-                set(0, 3, value.get(0, 0));
-                set(1, 3, value.get(1, 0));
-                set(2, 3, value.get(2, 0));
+                the_matrix[0, 3] = value.get(0, 0);
+                the_matrix[1, 3] = value.get(1, 0);
+                the_matrix[2, 3] = value.get(2, 0);
+
+                if (Changed != null) Changed(this, System.EventArgs.Empty);  // Inform the user that the matrix has changed
             }
         }
         public matrix main_diagonal             // Gets vector that represents the main diagonal of the matrix (all elements Aij where i==j)
@@ -1045,7 +1056,7 @@
                 // Copy data from the matrix
                 matrix new_matrix = new matrix(num_of_elements, 1);
                 for (int i = 0; i < num_of_elements; ++i)
-                    new_matrix.set(i, 0, the_matrix[i, i]);
+                    new_matrix.the_matrix[i, 0] = the_matrix[i, i];
 
                 return new_matrix;
             }
@@ -1067,7 +1078,7 @@
                 return sum;
             }
         }
-        public int rank                         // Get the rank of the matrix
+        public int rank                         // Gets the rank of the matrix
         {
             get
             {
@@ -1090,6 +1101,10 @@
                 return result;
             }
         }
+
+        // Events
+        public delegate void MatrixChangedEventHandler(object sender, System.EventArgs e);
+        public event MatrixChangedEventHandler Changed;  // Triggered when any values in the matrix are changed
 
         // SVD functions
         public void svd(out matrix U, out matrix W, out matrix V)
@@ -1405,9 +1420,9 @@
 
             // Find cross product
             matrix new_vector = new matrix(3, 1);
-            new_vector.set(0, 0, a.get(1, 0) * b.get(2, 0) - a.get(2, 0) * b.get(1, 0));
-            new_vector.set(1, 0, a.get(2, 0) * b.get(0, 0) - a.get(0, 0) * b.get(2, 0));
-            new_vector.set(2, 0, a.get(0, 0) * b.get(1, 0) - a.get(1, 0) * b.get(0, 0));
+            new_vector.the_matrix[0, 0] = a.get(1, 0) * b.get(2, 0) - a.get(2, 0) * b.get(1, 0);
+            new_vector.the_matrix[1, 0] = a.get(2, 0) * b.get(0, 0) - a.get(0, 0) * b.get(2, 0);
+            new_vector.the_matrix[2, 0] = a.get(0, 0) * b.get(1, 0) - a.get(1, 0) * b.get(0, 0);
 
             return new_vector;
         }
