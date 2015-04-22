@@ -764,7 +764,7 @@
         }
 
         // Matrix status functions/properties
-        public bool is_empty                    // Returns TRUE if the matrix is empty
+        public bool is_empty                     // Returns TRUE if the matrix is empty
         {
             get
             {
@@ -775,7 +775,7 @@
             }
 
         }
-        public bool is_square                   // Returns TRUE if the matrix is square (note: returns false if the matrix is empty)
+        public bool is_square                    // Returns TRUE if the matrix is square (note: returns false if the matrix is empty)
         {
             get
             {
@@ -785,7 +785,7 @@
                     return (rows == cols);
             }
         }
-        public bool is_singular                 // Returns TRUE if the matrix is singular (that is if the matrix determinant is 0)
+        public bool is_singular                  // Returns TRUE if the matrix is singular (that is if the matrix determinant is 0)
         {
             get
             {
@@ -795,7 +795,7 @@
                     return false;
             }
         }
-        public bool is_symmetric                // Returns TRUE if the matrix is symmetric (note: returns false if the matrix is empty)
+        public bool is_symmetric                 // Returns TRUE if the matrix is symmetric (note: returns false if the matrix is empty)
         {
             get
             {
@@ -812,7 +812,7 @@
                     return false;
             }
         }
-        public bool is_transformation_matrix    // Returns TRUE if matrix is 4x4 transformation matrix
+        public bool is_3d_transformation_matrix  // Returns TRUE if matrix is 4x4 transformation matrix
         {
             get
             {
@@ -827,7 +827,7 @@
                 return true;
             }
         }
-        public bool is_null_matrix              // Returns TRUE if matrix contains all 0's (note: returns false if the matrix is empty)
+        public bool is_null_matrix               // Returns TRUE if matrix contains all 0's (note: returns false if the matrix is empty)
         {
             get
             {
@@ -842,7 +842,7 @@
                 return true;  // Contains all 0's
             }
         }
-        public bool is_diagonal_matrix          // Returns TRUE if matrix is a diagonal matrix (note: returns false if the matrix is empty)
+        public bool is_diagonal_matrix           // Returns TRUE if matrix is a diagonal matrix (note: returns false if the matrix is empty)
         {
             get
             {
@@ -861,7 +861,7 @@
                 return true;  // Passed all tests
             }
         }
-        public bool is_scaler_matrix            // Returns TRUE if matrix is a scaler matrix (note: returns false if the matrix is empty)
+        public bool is_scaler_matrix             // Returns TRUE if matrix is a scaler matrix (note: returns false if the matrix is empty)
         {
             get
             {
@@ -878,7 +878,7 @@
                 return false;  // Not a scaler matrix
             }
         }
-        public bool is_identiy_matrix           // Returns TRUE if matrix is an identity matrix  (note: returns false if the matrix is empty)
+        public bool is_identiy_matrix            // Returns TRUE if matrix is an identity matrix  (note: returns false if the matrix is empty)
         {
             get
             {
@@ -888,7 +888,7 @@
                     return false;
             }
         }
-        public bool is_vector                   // Returns TRUE if matrix is nx1
+        public bool is_vector                    // Returns TRUE if matrix is nx1
         {
             get
             {
@@ -898,7 +898,7 @@
                     return false;
             }
         }
-        public bool is_3d_vector                // Returns TRUE if matrix is 3x1
+        public bool is_3d_vector                 // Returns TRUE if matrix is 3x1
         {
             get
             {
@@ -908,7 +908,7 @@
                     return false;
             }
         }
-        public int rows                         // Returns the number of rows in the matrix
+        public int rows                          // Returns the number of rows in the matrix
         {
             get
             {
@@ -918,7 +918,7 @@
                     return the_matrix.GetLength(0);
             }
         }
-        public int cols                         // Returns the number of columns in the matrix
+        public int cols                          // Returns the number of columns in the matrix
         {
             get
             {
@@ -928,19 +928,19 @@
                     return the_matrix.GetLength(1);
             }
         }
-        public double get(int row, int col)     // Returns the value of a specific cell (note: returns 0 for an invalid cell)
+        public double get(int row, int col)      // Returns the value of a specific cell (note: returns 0 for an invalid cell)
         {
             if (row < 0 || row >= rows || col < 0 || col >= cols)
                 return 0;
             else
                 return the_matrix[row, col];
         }
-        public matrix x_axis_vector             // Gets/Sets the x axis vector (3x1 matrix) of a transformation matrix
+        public matrix x_axis_vector              // Gets/Sets the x axis vector (3x1 matrix) of a transformation matrix
         {
             get
             {
                 // Check if current matrix is a transformation matrix
-                if (!is_transformation_matrix)
+                if (!is_3d_transformation_matrix)
                     return new matrix();
 
                 return sub_matrix(0, 2, 0, 0);
@@ -948,7 +948,7 @@
             set
             {
                 // Check if current matrix is a transformation matrix
-                if (!is_transformation_matrix)
+                if (!is_3d_transformation_matrix)
                     return;
 
                 // Check if input has correct dimensions
@@ -963,12 +963,12 @@
                 if (Changed != null) Changed(this, System.EventArgs.Empty);  // Inform the user that the matrix has changed
             }
         }
-        public matrix y_axis_vector             // Gets/Sets the y axis vector (3x1 matrix) of a transformation matrix
+        public matrix y_axis_vector              // Gets/Sets the y axis vector (3x1 matrix) of a transformation matrix
         {
             get
             {
                 // Check if current matrix is a transformation matrix
-                if (!is_transformation_matrix)
+                if (!is_3d_transformation_matrix)
                     return new matrix();
 
                 return sub_matrix(0, 2, 1, 1);
@@ -976,7 +976,7 @@
             set
             {
                 // Check if current matrix is a transformation matrix
-                if (!is_transformation_matrix)
+                if (!is_3d_transformation_matrix)
                     return;
 
                 // Check if input has correct dimensions
@@ -991,12 +991,12 @@
                 if (Changed != null) Changed(this, System.EventArgs.Empty);  // Inform the user that the matrix has changed
             }
         }
-        public matrix z_axis_vector             // Gets/Sets the y axis vector (3x1 matrix) of a transformation matrix
+        public matrix z_axis_vector              // Gets/Sets the y axis vector (3x1 matrix) of a transformation matrix
         {
             get
             {
                 // Check if current matrix is a transformation matrix
-                if (!is_transformation_matrix)
+                if (!is_3d_transformation_matrix)
                     return new matrix();
 
                 return sub_matrix(0, 2, 2, 2);
@@ -1004,7 +1004,7 @@
             set
             {
                 // Check if current matrix is a transformation matrix
-                if (!is_transformation_matrix)
+                if (!is_3d_transformation_matrix)
                     return;
 
                 // Check if input has correct dimensions
@@ -1019,12 +1019,12 @@
                 if (Changed != null) Changed(this, System.EventArgs.Empty);  // Inform the user that the matrix has changed
             }
         }
-        public matrix position_vector           // Gets/Sets the position vector (3x1 matrix) of a transformation matrix
+        public matrix position_vector            // Gets/Sets the position vector (3x1 matrix) of a transformation matrix
         {
             get
             {
                 // Check if current matrix is a transformation matrix
-                if (!is_transformation_matrix)
+                if (!is_3d_transformation_matrix)
                     return new matrix();
 
                 return sub_matrix(0, 2, 3, 3);
@@ -1032,7 +1032,7 @@
             set
             {
                 // Check if current matrix is a transformation matrix
-                if (!is_transformation_matrix)
+                if (!is_3d_transformation_matrix)
                     return;
 
                 // Check if input has correct dimensions
@@ -1047,7 +1047,7 @@
                 if (Changed != null) Changed(this, System.EventArgs.Empty);  // Inform the user that the matrix has changed
             }
         }
-        public matrix main_diagonal             // Gets vector that represents the main diagonal of the matrix (all elements Aij where i==j)
+        public matrix main_diagonal              // Gets vector that represents the main diagonal of the matrix (all elements Aij where i==j)
         {
             get
             {
@@ -1061,7 +1061,7 @@
                 return new_matrix;
             }
         }
-        public double trace                     // Gets the trace of the matrix
+        public double trace                      // Gets the trace of the matrix
         {
             get
             {
@@ -1078,7 +1078,7 @@
                 return sum;
             }
         }
-        public int rank                         // Gets the rank of the matrix
+        public int rank                          // Gets the rank of the matrix
         {
             get
             {

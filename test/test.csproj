@@ -48,6 +48,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\geometry_library\geometry_library.csproj">
+      <Project>{a135039e-4976-45a7-92bc-f238606f4892}</Project>
+      <Name>geometry_library</Name>
+    </ProjectReference>
     <ProjectReference Include="..\matrix_library\matrix_library.csproj">
       <Project>{7c0a6878-f738-48dc-9998-fc2cbb166f1c}</Project>
       <Name>matrix_library</Name>
