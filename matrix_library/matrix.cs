@@ -245,7 +245,7 @@
         {
             // Check for valid row to remove
             if (row_to_remove < 0 || row_to_remove >= rows)
-                return new matrix();
+                throw new System.ArgumentException("Invalid row to remove");
 
             // Check if the current matrix is empty or only has one row
             if (is_empty || rows == 1)
@@ -269,7 +269,7 @@
         {
             // Check for valid row to remove
             if (col_to_remove < 0 || col_to_remove >= cols)
-                return new matrix();
+                throw new System.ArgumentException("Invalid column to remove");
 
             // Check if the current matrix is empty or only has one row
             if (is_empty || cols == 1)
@@ -302,7 +302,7 @@
         {
             // Check if capable of making submatrix
             if (start_row < 0 || stop_row >= rows || start_row > stop_row || start_col < 0 || stop_col >= cols || start_col > stop_col)
-                return new matrix();
+                throw new System.ArgumentException("Invalid values to construct a sub-matrix");
 
             // Create submatrix
             matrix new_matrix = new matrix(stop_row - start_row + 1, stop_col - start_col + 1);
@@ -351,7 +351,7 @@
         {
             // Check for valid rows and cols to remove
             if (row_to_exclude < 0 || col_to_exclude < 0 || row_to_exclude >= rows || col_to_exclude >= cols)
-                return 0;
+                throw new System.ArgumentException("Invalid row/column to remove");
 
             // Check if current matrix is empty
             if (is_empty)
@@ -366,14 +366,10 @@
             // Calculate minor
             return (remove_row_and_col(row_to_exclude, col_to_exclude)).determinant();
         }
-        public void LU_decomposition(out matrix L, out matrix U, out matrix P)              // Calculates the lower (L) and upper (U) triangle matrices and the permutation matrix (P), only works for square matrices, returns empty matrices on error
+        public void LU_decomposition(out matrix L, out matrix U, out matrix P)              // Calculates the lower (L) and upper (U) triangle matrices and the permutation matrix (P), only works for square matrices
         {
             if (!is_square)
-            {
-                L = new matrix();
-                U = new matrix();
-                P = new matrix();
-            }
+                throw new System.ArgumentException("Can't perform LU Decomposition on a non-square matrix");
 
             L = new matrix(rows);
             U = new matrix(this);
@@ -481,20 +477,16 @@
 
             return result;
         }
-        public double max()                                                                 // Returns the maximum value in the matrix, 0 for an empty matrix
+        public double max()                                                                 // Returns the maximum value in the matrix
         {
             int row, col;
             return max(out row, out col);
         }
-        public double max(out int row, out int col)                                         // Returns the maximum value in the matrix (0 for an empty matrix) and the row and col where that value is (-1 for an empty matrix)
+        public double max(out int row, out int col)                                         // Returns the maximum value in the matrix and the row and col where that value is (-1 for an empty matrix)
         {
             // Check if current matrix is empty
             if (is_empty)
-            {
-                row = -1;
-                col = -1;
-                return 0;
-            }
+                throw new System.ArgumentException("No maximum value for an empty matrix");
 
             // Find max
             row = 0;
@@ -511,20 +503,16 @@
 
             return max;
         }
-        public double abs_max()                                                             // Returns the maximum absolute value in the matrix, 0 for an empty matrix
+        public double abs_max()                                                             // Returns the maximum absolute value in the matrix
         {
             int row, col;
             return abs_max(out row, out col);
         }
-        public double abs_max(out int row, out int col)                                     // Returns the maximum absolute value in the matrix (0 for an empty matrix) and the row and col where that value is (-1 for an empty matrix)
+        public double abs_max(out int row, out int col)                                     // Returns the maximum absolute value in the matrix and the row and col where that value is (-1 for an empty matrix)
         {
             // Check if current matrix is empty
             if (is_empty)
-            {
-                row = -1;
-                col = -1;
-                return 0;
-            }
+                throw new System.ArgumentException("No maximum value for an empty matrix");
 
             // Find max
             row = 0;
@@ -541,20 +529,16 @@
 
             return max;
         }
-        public double min()                                                                 // Returns the minimum value in the matrix, 0 for an empty matrix
+        public double min()                                                                 // Returns the minimum value in the matrix
         {
             int row, col;
             return min(out row, out col);
         }
-        public double min(out int row, out int col)                                         // Returns the minimum value in the matrix (0 for an empty matrix) and the row and col where that value is (-1 for an empty matrix)
+        public double min(out int row, out int col)                                         // Returns the minimum value in the matrix and the row and col where that value is (-1 for an empty matrix)
         {
             // Check if current matrix is empty
             if (is_empty)
-            {
-                row = -1;
-                col = -1;
-                return 0;
-            }
+                throw new System.ArgumentException("No mimimum value for an empty matrix");
 
             // Find min
             row = 0;
@@ -575,12 +559,12 @@
         {
             // Check if current matrix is empty
             if (is_empty)
-                return new matrix();
+                throw new System.ArgumentException("Can't find an inverse of an empty matrix");
 
             // Check if current matrix has an inverse
             double det = determinant();
             if (det == 0)
-                return new matrix();
+                throw new System.ArithmeticException("This matrix does not have an inverse");
 
             // Calculate cofactor matrix
             matrix cofactor_matrix = new matrix(rows, cols);
@@ -621,7 +605,7 @@
         {
             // Check if the matrix is empty
             if (is_empty)
-                return new matrix();
+                throw new System.ArgumentException("Can't add a row to an empty matrix");
 
             // Copy old matrix data
             matrix new_matrix = new matrix(rows + 1, cols);
@@ -639,7 +623,7 @@
         {
             // Check if the matrix is empty
             if (is_empty)
-                return new matrix();
+                throw new System.ArgumentException("Can't add a column to an empty matrix");
 
             // Copy old matrix data
             matrix new_matrix = new matrix(rows, cols + 1);
@@ -657,7 +641,7 @@
         {
             // Check for valid row
             if (row < 0 || row >= rows)
-                return new matrix();
+                throw new System.ArgumentException("Invalid row to return");
             else
                 return sub_matrix(row, row, 0, cols - 1).transpose();
         }
@@ -665,7 +649,7 @@
         {
             // Check for valid col
             if (col < 0 || col >= cols)
-                return new matrix();
+                throw new System.ArgumentException("Invalid column to remove");
             else
             {
                 return sub_matrix(0, rows - 1, col, col);
@@ -674,7 +658,7 @@
         public matrix swap_rows(int row1, int row2)                                         // Returns a new matrix with rows row1 and row2 swapped
         {
             if (row1 < 0 || row1 >= rows || row2 < 0 || row2 >= rows)
-                return new matrix();
+                throw new System.ArgumentException("Invalid rows to swap");
 
             matrix new_matrix = new matrix(this);
 
@@ -693,7 +677,7 @@
         public matrix swap_cols(int col1, int col2)                                         // Returns a new matrix with columns col1 and col2 swapped
         {
             if (col1 < 0 || col1 >= cols || col2 < 0 || col2 >= cols)
-                return new matrix();
+                throw new System.ArgumentException("Invalid columns to sawp");
 
             matrix new_matrix = new matrix(this);
 
@@ -726,7 +710,7 @@
                 int num_rows = System.Convert.ToInt32(values[0]);
                 int num_cols = System.Convert.ToInt32(values[1]);
                 if (num_rows <= 0 || num_cols <= 0)  // Empty matrix
-                    throw new System.Exception();
+                    throw new System.FormatException("Invalid number of rows/columns in input file");
 
                 // Allocate space
                 the_matrix = new double[num_rows, num_cols];
@@ -742,6 +726,7 @@
             catch
             {
                 the_matrix = null;
+                throw new System.FormatException("Input file improperly formated");
             }
             finally
             {
@@ -757,7 +742,7 @@
         public void set(int row, int col, double value)  // Sets a specific cell to a value
         {
             if (row < 0 || row >= rows || col < 0 || col >= cols)
-                return;
+                throw new System.ArgumentException("Invalid row/column to set");
 
             the_matrix[row, col] = value;
             if (Changed != null) Changed(this, System.EventArgs.Empty);  // Inform the user that the matrix has changed
@@ -928,10 +913,10 @@
                     return the_matrix.GetLength(1);
             }
         }
-        public double get(int row, int col)      // Returns the value of a specific cell (note: returns 0 for an invalid cell)
+        public double get(int row, int col)      // Returns the value of a specific cell
         {
             if (row < 0 || row >= rows || col < 0 || col >= cols)
-                return 0;
+                throw new System.ArgumentException("Invalid row/column to get");
             else
                 return the_matrix[row, col];
         }
@@ -941,7 +926,7 @@
             {
                 // Check if current matrix is a transformation matrix
                 if (!is_3d_transformation_matrix)
-                    return new matrix();
+                    throw new System.ArgumentException("Can't get an axis vector of a non 3d transformation matrix");
 
                 return sub_matrix(0, 2, 0, 0);
             }
@@ -949,11 +934,11 @@
             {
                 // Check if current matrix is a transformation matrix
                 if (!is_3d_transformation_matrix)
-                    return;
+                    throw new System.ArgumentException("Can't set an axis vector of a non 3d transformation matrix");
 
                 // Check if input has correct dimensions
                 if (!value.is_3d_vector)
-                    return;
+                    throw new System.ArgumentException("Input axis vector is not a 3d vector");
 
                 // Copy data
                 the_matrix[0, 0] = value.get(0, 0);
@@ -969,7 +954,7 @@
             {
                 // Check if current matrix is a transformation matrix
                 if (!is_3d_transformation_matrix)
-                    return new matrix();
+                    throw new System.ArgumentException("Can't get an axis vector of a non 3d transformation matrix");
 
                 return sub_matrix(0, 2, 1, 1);
             }
@@ -977,11 +962,11 @@
             {
                 // Check if current matrix is a transformation matrix
                 if (!is_3d_transformation_matrix)
-                    return;
+                    throw new System.ArgumentException("Can't set an axis vector of a non 3d transformation matrix");
 
                 // Check if input has correct dimensions
                 if (!value.is_3d_vector)
-                    return;
+                    throw new System.ArgumentException("Input axis vector is not a 3d vector");
 
                 // Copy data
                 the_matrix[0, 1] = value.get(0, 0);
@@ -997,7 +982,7 @@
             {
                 // Check if current matrix is a transformation matrix
                 if (!is_3d_transformation_matrix)
-                    return new matrix();
+                    throw new System.ArgumentException("Can't get an axis vector of a non 3d transformation matrix");
 
                 return sub_matrix(0, 2, 2, 2);
             }
@@ -1005,11 +990,11 @@
             {
                 // Check if current matrix is a transformation matrix
                 if (!is_3d_transformation_matrix)
-                    return;
+                    throw new System.ArgumentException("Can't set an axis vector of a non 3d transformation matrix");
 
                 // Check if input has correct dimensions
                 if (!value.is_3d_vector)
-                    return;
+                    throw new System.ArgumentException("Input axis vector is not a 3d vector");
 
                 // Copy data
                 the_matrix[0, 2] = value.get(0, 0);
@@ -1025,7 +1010,7 @@
             {
                 // Check if current matrix is a transformation matrix
                 if (!is_3d_transformation_matrix)
-                    return new matrix();
+                    throw new System.ArgumentException("Can't get position vector of a non 3d transformation matrix");
 
                 return sub_matrix(0, 2, 3, 3);
             }
@@ -1033,11 +1018,11 @@
             {
                 // Check if current matrix is a transformation matrix
                 if (!is_3d_transformation_matrix)
-                    return;
+                    throw new System.ArgumentException("Can't set position vector of a non 3d transformation matrix");
 
                 // Check if input has correct dimensions
                 if (!value.is_3d_vector)
-                    return;
+                    throw new System.ArgumentException("Input position vector is not a 3d vector");
 
                 // Copy data
                 the_matrix[0, 3] = value.get(0, 0);
@@ -1416,7 +1401,7 @@
         {
             // Check for proper input data sizes
             if (!a.is_3d_vector || !b.is_3d_vector)
-                return new matrix();
+                throw new System.ArgumentException("Can't perform cross product of non 3d vectors");
 
             // Find cross product
             matrix new_vector = new matrix(3, 1);
@@ -1426,11 +1411,13 @@
 
             return new_vector;
         }
-        public static double dot_product(matrix a, matrix b)            // Calculates the dot product of two vectors, returns 0 on error
+        public static double dot_product(matrix a, matrix b)            // Calculates the dot product of two vectors
         {
             // Check for proper dimensions
-            if (a.rows != b.rows || !a.is_vector || !b.is_vector)
-                return 0;
+            if (!a.is_vector || !b.is_vector)
+                throw new System.ArgumentException("Can't perform dot product on non vectors");
+            if (a.rows != b.rows)
+                throw new System.ArgumentException("Can't perform dot product on vectors of different size");
 
             double sum = 0;
             for (int i = 0; i < a.rows; ++i)
@@ -1442,7 +1429,7 @@
         {
             // Check for vector
             if (!vec.is_vector)
-                return -1;
+                throw new System.ArgumentException("Can't perform magnitude on non vectors");
 
             // Find magnitude
             double result = 0;
@@ -1455,7 +1442,7 @@
         {
             // Check for proper input data sizes
             if (!vec.is_3d_vector)
-                return new matrix();
+                throw new System.ArgumentException("Can't normalize non 3d vectors");
 
             return vec.element_divide_by(magnitude(vec));
         }
@@ -1470,7 +1457,7 @@
         {
             // Can we solve this system
             if (a.cols != b.rows || b.cols != 1 || a.inverse().is_empty)
-                return new matrix();
+                throw new System.ArgumentException("System of equations is not solvable");
 
             return a.inverse() * b;
         }
