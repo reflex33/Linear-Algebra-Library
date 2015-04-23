@@ -6,6 +6,9 @@ Library for linear algebra.  Includes sub-libraries for matrices and geometry cu
 2. Add a class for homogeneous transformation matrix?  Benefits: strong typing.  Detriments: lots of extra code.
 2. Add a class for vector/vector3d?  Benefits: strong typing.  Detriments: lots of extra code.
 
+## 4/23/2015
+Added a bracket operator to the matrix class
+
 ## 4/22/2015.2
 Exceptionified the matrix class
 

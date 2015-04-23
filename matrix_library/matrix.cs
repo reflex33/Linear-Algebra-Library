@@ -741,11 +741,25 @@
         }
         public void set(int row, int col, double value)  // Sets a specific cell to a value
         {
-            if (row < 0 || row >= rows || col < 0 || col >= cols)
-                throw new System.ArgumentException("Invalid row/column to set");
+            this[row, col] = value;
+        }
+        public double this[int row, int col]
+        {
+            get
+            {
+                if (row < 0 || row >= rows || col < 0 || col >= cols)
+                    throw new System.ArgumentException("Invalid row/column to get");
+                else
+                    return the_matrix[row, col];
+            }
+            set
+            {
+                if (row < 0 || row >= rows || col < 0 || col >= cols)
+                    throw new System.ArgumentException("Invalid row/column to set");
 
-            the_matrix[row, col] = value;
-            if (Changed != null) Changed(this, System.EventArgs.Empty);  // Inform the user that the matrix has changed
+                the_matrix[row, col] = value;
+                if (Changed != null) Changed(this, System.EventArgs.Empty);  // Inform the user that the matrix has changed
+            }
         }
 
         // Matrix status functions/properties
@@ -915,10 +929,7 @@
         }
         public double get(int row, int col)      // Returns the value of a specific cell
         {
-            if (row < 0 || row >= rows || col < 0 || col >= cols)
-                throw new System.ArgumentException("Invalid row/column to get");
-            else
-                return the_matrix[row, col];
+            return this[row, col];
         }
         public matrix x_axis_vector              // Gets/Sets the x axis vector (3x1 matrix) of a transformation matrix
         {
