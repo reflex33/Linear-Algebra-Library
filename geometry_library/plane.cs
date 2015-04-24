@@ -58,6 +58,10 @@ namespace geometry_library
 
             return result;
         }
+        public double distance_to(point3d p)
+        {
+            return p.distance_to(this);
+        }
 
         public plane()
         {

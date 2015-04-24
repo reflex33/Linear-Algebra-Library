@@ -46,14 +46,14 @@ namespace geometry_library
 
         public bool is_in_front_of(plane p)
         {
-            if (p.a * x + p.b * y + p.c * z + p.d > 0)
+            if (distance_to(p) > 0)
                 return true;
             else
                 return false;
         }
         public bool is_near(plane p, double threshold)
         {
-            double result = p.a * x + p.b * y + p.c * z + p.d;
+            double result = distance_to(p);
             if (result >= -threshold && result <= threshold)
                 return true;
             else
@@ -61,10 +61,14 @@ namespace geometry_library
         }
         public bool is_behind(plane p)
         {
-            if (p.a * x + p.b * y + p.c * z + p.d < 0)
+            if (distance_to(p) < 0)
                 return true;
             else
                 return false;
+        }
+        public double distance_to(plane p)
+        {
+            return (p.a * x + p.b * y + p.c * z + p.d) / System.Math.Sqrt(p.a * p.a + p.b * p.b + p.c * p.c);
         }
 
         public point3d()
