@@ -45,7 +45,11 @@
         }
 
         // Mathmatical functions
-        public bool Equals(matrix rhs)                           // Determines if this == rhs
+        public bool Equals(matrix rhs)                                  // Determines if this == rhs
+        {
+            return Equals_threshold(rhs, 0);
+        }
+        public bool Equals_threshold(matrix rhs, double threshold)      // Determines if this == rhs using thresholding
         {
             // Check if dimensions are the same
             if (rows != rhs.rows || cols != rhs.cols)
@@ -54,12 +58,12 @@
             // Deep check values of the matrix
             for (int i = 0; i < rows; ++i)
                 for (int j = 0; j < cols; ++j)
-                    if (the_matrix[i, j] != rhs.the_matrix[i, j])
+                    if (the_matrix[i, j] < rhs.the_matrix[i, j] - threshold || the_matrix[i, j] > rhs.the_matrix[i, j] + threshold)
                         return false;
 
             return true;
         }
-        public static matrix operator +(matrix lhs, matrix rhs)  // Performs element wise matrix addition
+        public static matrix operator +(matrix lhs, matrix rhs)         // Performs element wise matrix addition
         {
             // Check if either matrix is empty
             if (lhs.is_empty || rhs.is_empty)
@@ -77,7 +81,7 @@
 
             return new_matrix;
         }
-        public matrix element_add(double x)                      // Performs element wise x + m
+        public matrix element_add(double x)                             // Performs element wise x + m
         {
             // Add
             matrix new_matrix = new matrix(rows, cols);
@@ -87,7 +91,7 @@
 
             return new_matrix;
         }
-        public static matrix operator -(matrix lhs, matrix rhs)  // Performs element wise matrix subtraction
+        public static matrix operator -(matrix lhs, matrix rhs)         // Performs element wise matrix subtraction
         {
             // Check dimensions for proper addition
             if (lhs.rows != rhs.rows || lhs.cols != rhs.cols)
@@ -101,7 +105,7 @@
 
             return new_matrix;
         }
-        public matrix element_subtract_by(double x)              // Performs element wise m - x
+        public matrix element_subtract_by(double x)                     // Performs element wise m - x
         {
             // Subtract
             matrix new_matrix = new matrix(rows, cols);
@@ -111,7 +115,7 @@
 
             return new_matrix;
         }
-        public matrix element_subtract_from(double x)            // Performs element wise x - m
+        public matrix element_subtract_from(double x)                   // Performs element wise x - m
         {
             // Subtract
             matrix new_matrix = new matrix(rows, cols);
@@ -121,7 +125,7 @@
 
             return new_matrix;
         }
-        public static matrix operator *(matrix lhs, matrix rhs)  // Performs matrix multiplication
+        public static matrix operator *(matrix lhs, matrix rhs)         // Performs matrix multiplication
         {
             // Check inner dimension for proper multiplication
             if (lhs.cols != rhs.rows)
@@ -141,7 +145,7 @@
 
             return new_matrix;
         }
-        public matrix element_multiply(matrix rhs)               // Performs m .* rhs
+        public matrix element_multiply(matrix rhs)                      // Performs m .* rhs
         {
             // Check dimensions for proper addition
             if (rows != rhs.rows || cols != rhs.cols)
@@ -155,7 +159,7 @@
 
             return new_matrix;
         }
-        public matrix element_multiply(double x)                 // Performs element wise m * x
+        public matrix element_multiply(double x)                        // Performs element wise m * x
         {
             // Multiply
             matrix new_matrix = new matrix(rows, cols);
@@ -165,7 +169,7 @@
 
             return new_matrix;
         }
-        public matrix element_divide_by(double x)                // Performs element wise m / x
+        public matrix element_divide_by(double x)                       // Performs element wise m / x
         {
             // Divide
             matrix new_matrix = new matrix(rows, cols);
@@ -175,7 +179,7 @@
 
             return new_matrix;
         }
-        public matrix element_divide_denom(double x)             // Performs element wise x / m
+        public matrix element_divide_denom(double x)                    // Performs element wise x / m
         {
             // Divide
             matrix new_matrix = new matrix(rows, cols);
@@ -185,7 +189,7 @@
 
             return new_matrix;
         }
-        public matrix element_raise_to_power(double x)           // Performs element wise m^x
+        public matrix element_raise_to_power(double x)                  // Performs element wise m^x
         {
             // Raise to power
             matrix new_matrix = new matrix(rows, cols);
@@ -195,7 +199,7 @@
 
             return new_matrix;
         }
-        public matrix element_power_to_raise(double x)           // Performs element wise x^m
+        public matrix element_power_to_raise(double x)                  // Performs element wise x^m
         {
             // Power to raise
             matrix new_matrix = new matrix(rows, cols);
@@ -205,7 +209,7 @@
 
             return new_matrix;
         }
-        public matrix element_exp()                              // Performs element wise e^m
+        public matrix element_exp()                                     // Performs element wise e^m
         {
             // e^m
             matrix new_matrix = new matrix(rows, cols);
@@ -215,7 +219,7 @@
 
             return new_matrix;
         }
-        public matrix element_tanh()                             // Performs element wise tanh
+        public matrix element_tanh()                                    // Performs element wise tanh
         {
             // tanh
             matrix new_matrix = new matrix(rows, cols);
@@ -823,6 +827,18 @@
                 if (the_matrix[3, 0] != 0 || the_matrix[3, 1] != 0 || the_matrix[3, 2] != 0 || the_matrix[3, 3] != 1)
                     return false;
 
+                matrix x_vec = this.sub_matrix(0, 2, 0, 0);
+                matrix y_vec = this.sub_matrix(0, 2, 1, 1);
+                matrix z_vec = this.sub_matrix(0, 2, 2, 2);
+
+                // Check if vectors are normalized
+                if (!x_vec.is_normalized_3d_vector || !y_vec.is_normalized_3d_vector || !z_vec.is_normalized_3d_vector)
+                    return false;
+
+                // Check if vectors are orthogonal
+                if (!z_vec.Equals_threshold(matrix.cross_product(x_vec, y_vec), 0.01))
+                    return false;
+
                 return true;
             }
         }
@@ -907,6 +923,18 @@
                     return false;
             }
         }
+        public bool is_normalized_3d_vector      // Returns true if the matrix is 3x1 and normalized
+        {
+            get
+            {
+                if (rows != 3 && cols != 1)
+                    return false;
+                if (!this.Equals_threshold(matrix.normalize(this), 0.01))
+                    return false;
+
+                return true;
+            }
+        }
         public int rows                          // Returns the number of rows in the matrix
         {
             get
@@ -948,7 +976,7 @@
                     throw new System.ArgumentException("Can't set an axis vector of a non 3d transformation matrix");
 
                 // Check if input has correct dimensions
-                if (!value.is_3d_vector)
+                if (!value.is_normalized_3d_vector)
                     throw new System.ArgumentException("Input axis vector is not a 3d vector");
 
                 // Copy data
@@ -976,7 +1004,7 @@
                     throw new System.ArgumentException("Can't set an axis vector of a non 3d transformation matrix");
 
                 // Check if input has correct dimensions
-                if (!value.is_3d_vector)
+                if (!value.is_normalized_3d_vector)
                     throw new System.ArgumentException("Input axis vector is not a 3d vector");
 
                 // Copy data
@@ -1004,7 +1032,7 @@
                     throw new System.ArgumentException("Can't set an axis vector of a non 3d transformation matrix");
 
                 // Check if input has correct dimensions
-                if (!value.is_3d_vector)
+                if (!value.is_normalized_3d_vector)
                     throw new System.ArgumentException("Input axis vector is not a 3d vector");
 
                 // Copy data
@@ -1446,8 +1474,8 @@
             double result = 0;
             for (int i = 0; i < vec.rows; ++i)
                 result += vec.get(i, 0) * vec.get(i, 0);
-            return System.Math.Sqrt(result);
 
+            return System.Math.Sqrt(result);
         }
         public static matrix normalize(matrix vec)                      // Calculates the normalized version of a 3D vector stored in 'matrix' class form
         {
@@ -1455,7 +1483,11 @@
             if (!vec.is_3d_vector)
                 throw new System.ArgumentException("Can't normalize non 3d vectors");
 
-            return vec.element_divide_by(magnitude(vec));
+            double mag = magnitude(vec);
+            if (mag == 0)
+                throw new System.ArgumentException("Can't normalize a vector with no magnitude");
+
+            return vec.element_divide_by(mag);
         }
         public static int symmetric_round(double value)                 // Calculates the rounded value of 'value' using the symmetric method
         {

@@ -6,6 +6,12 @@ Library for linear algebra.  Includes sub-libraries for matrices and geometry cu
 2. Add a class for homogeneous transformation matrix?  Benefits: strong typing.  Detriments: lots of extra code.
 2. Add a class for vector/vector3d?  Benefits: strong typing.  Detriments: lots of extra code.
 
+## 4/30/2015
+Added equals_threshold to matrix
+Added is_normalized_3d_vector to matrix
+Modified is_3d_transformation_matrix to check normalized and orthogonal vectors in addition to other checks
+Fixed a bug where normalizing a vector of all zeros was returning a value
+
 ## 4/24/2015
 Added "distance to" point and plane
 
