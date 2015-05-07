@@ -2,6 +2,9 @@
 
 namespace geometry_library
 {
+    /// <summary>
+    /// A 3D Plane
+    /// </summary>
     public class plane
     {
         private void matrix_changed(object sender, System.EventArgs e)
@@ -19,10 +22,28 @@ namespace geometry_library
             d = m.get(3, 0);
         }
 
+        
+        /// <summary>
+        /// Gets/Sets the 'a' of the plane
+        /// </summary>
         public double a { get; set; }
+        /// <summary>
+        /// Gets/Sets the 'b' of the plane
+        /// </summary>
         public double b { get; set; }
+        /// <summary>
+        /// Gets/Sets the 'c' of the plane
+        /// </summary>
         public double c { get; set; }
+        /// <summary>
+        /// Gets/Sets the 'd' of the plane
+        /// </summary>
         public double d { get; set; }
+        /// <summary>
+        /// Gets/Sets the values of the plane using 4x1 matrix form
+        /// Note:  You can change the values by giving a complete 4x1 vector, or you may change individual values of the resulting matrix
+        /// form.  If you change values in the matrix form, it WILL be reflected in the plane.
+        /// </summary>
         public matrix matrix_representation
         {
             get
@@ -48,6 +69,12 @@ namespace geometry_library
             }
         }
 
+
+        /// <summary>
+        /// Transforms the plane by a homogeneous transformation matrix (m*p)
+        /// </summary>
+        /// <param name="m">The homogeneous transformation matrix</param>
+        /// <returns>New plane</returns>
         public plane transform(matrix m)
         {
             if (!m.is_3d_transformation_matrix)
@@ -58,11 +85,20 @@ namespace geometry_library
 
             return result;
         }
+        /// <summary>
+        /// Determines the distance of the plane to a point
+        /// </summary>
+        /// <param name="p">The point</param>
+        /// <returns>The distance</returns>
         public double distance_to(point3d p)
         {
             return p.distance_to(this);
         }
 
+
+        /// <summary>
+        /// Creates a plane where a=b=c=d=0
+        /// </summary>
         public plane()
         {
             a = 0;

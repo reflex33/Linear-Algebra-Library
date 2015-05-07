@@ -2,6 +2,9 @@
 
 namespace geometry_library
 {
+    /// <summary>
+    /// A 3D Point
+    /// </summary>
     public class point3d
     {
         private void matrix_changed(object sender, System.EventArgs e)
@@ -18,9 +21,24 @@ namespace geometry_library
             z = m.get(2, 0);
         }
 
+
+        /// <summary>
+        /// Gets/Sets the 'x' of the point
+        /// </summary>
         public double x { get; set; }
+        /// <summary>
+        /// Gets/Sets the 'y' of the point
+        /// </summary>
         public double y { get; set; }
+        /// <summary>
+        /// Gets/Sets the 'z' of the point
+        /// </summary>
         public double z { get; set; }
+        /// <summary>
+        /// Gets/Sets the values of the point using 3x1 matrix form
+        /// Note:  You can change the values by giving a complete 3x1 vector, or you may change individual values of the resulting matrix
+        /// form.  If you change values in the matrix form, it WILL be reflected in the point.
+        /// </summary>
         public matrix matrix_representation
         {
             get
@@ -44,6 +62,12 @@ namespace geometry_library
             }
         }
 
+
+        /// <summary>
+        /// Determines if the point is front of a plane (i.e. is it in the direction of the plane normal)
+        /// </summary>
+        /// <param name="p">The plane</param>
+        /// <returns>True if it is in front, False if it is on or behind the plane</returns>
         public bool is_in_front_of(plane p)
         {
             if (distance_to(p) > 0)
@@ -51,6 +75,12 @@ namespace geometry_library
             else
                 return false;
         }
+        /// <summary>
+        /// Determines if the point is near a plane using a threshold
+        /// </summary>
+        /// <param name="p">The plane</param>
+        /// <param name="threshold">The threshold</param>
+        /// <returns>True if the point is within the distance indicated with the threshold, False otherwise</returns>
         public bool is_near(plane p, double threshold)
         {
             double result = distance_to(p);
@@ -59,6 +89,11 @@ namespace geometry_library
             else
                 return false;
         }
+        /// <summary>
+        /// Determines if the point is behind a plane (i.e. is it in the opposite direction of the plane normal)
+        /// </summary>
+        /// <param name="p">The plane</param>
+        /// <returns>True if it is behind, False if it is on or in front of the plane</returns>
         public bool is_behind(plane p)
         {
             if (distance_to(p) < 0)
@@ -66,11 +101,20 @@ namespace geometry_library
             else
                 return false;
         }
+        /// <summary>
+        /// Determines the distance of the point to a plane
+        /// </summary>
+        /// <param name="p">The plane</param>
+        /// <returns>The distance</returns>
         public double distance_to(plane p)
         {
             return (p.a * x + p.b * y + p.c * z + p.d) / System.Math.Sqrt(p.a * p.a + p.b * p.b + p.c * p.c);
         }
 
+
+        /// <summary>
+        /// Creates a point where x=y=z=0
+        /// </summary>
         public point3d()
         {
             x = 0;
