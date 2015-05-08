@@ -5,7 +5,6 @@ Library for linear algebra.  Includes sub-libraries for matrices and geometry cu
 1. Add a class for a line.
 2. Add a class for homogeneous transformation matrix?  Benefits: strong typing.  Detriments: lots of extra code.
 3. Add a class for vector/vector3d?  Benefits: strong typing.  Detriments: lots of extra code.
-4. Change x/y/z/postion vector of the matrix class to allow modification of individual values of resulting new matrix.
 
 ## 5/7/2015
 Converted function comments to xml code comments
