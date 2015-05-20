@@ -121,5 +121,15 @@ namespace geometry_library
             y = 0;
             z = 0;
         }
+        /// <summary>
+        /// Creates a point that is a deep copy of another point
+        /// </summary>
+        /// <param name="point_to_copy">The point to copy</param>
+        public point3d(point3d point_to_copy)
+        {
+            x = point_to_copy.x;
+            y = point_to_copy.y;
+            z = point_to_copy.z;
+        }
     }
 }

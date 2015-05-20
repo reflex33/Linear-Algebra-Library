@@ -106,5 +106,16 @@ namespace geometry_library
             c = 0;
             d = 0;
         }
+        /// <summary>
+        /// Creates a plane that is a deep copy of another plane
+        /// </summary>
+        /// <param name="plane_to_copy">The plane to copy</param>
+        public plane(plane plane_to_copy)
+        {
+            a = plane_to_copy.a;
+            b = plane_to_copy.b;
+            c = plane_to_copy.c;
+            d = plane_to_copy.d;
+        }
     }
 }
