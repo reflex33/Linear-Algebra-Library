@@ -1389,6 +1389,42 @@
             }
         }
         /// <summary>
+        /// Gets/Sets the rotation submatrix (3x3) of a transformation matrix
+        /// Note:  You can only set this by giving a complete rotation matrix.  If you try to set an individual value in the returned matrix, that value will NOT be reflected in the matrix.
+        /// </summary>
+        public matrix rotation_submatrix
+        {
+            get
+            {
+                // Check if the current matrix is a transformation matrix
+                if (!is_3d_transformation_matrix)
+                    throw new System.ArgumentException("Can't get rotation submatrix of a non 3d transformation matrix");
+
+                return sub_matrix(0, 2, 0, 2);
+            }
+            set
+            {
+                // Check if current matrix is a transformation matrix
+                if (!is_3d_transformation_matrix)
+                    throw new System.ArgumentException("Can't set rotation submatrix of a non 3d transformation matrix");
+
+                if (value.rows != 3 || value.cols != 3)
+                    throw new System.ArgumentException("Rotation submatrix must be a 3x3 matrix");
+
+                // Check if the input is a proper rotation matrix
+                matrix temp = value.add_row(0);
+                temp = temp.add_col(0);
+                temp[3, 3] = 1;
+                if (!temp.is_3d_transformation_matrix)
+                    throw new System.ArgumentException("Rotation submatrix not properly formated (vectors must be orthogonal and normalized");
+
+                // Copy the data
+                the_matrix[0, 0] = value[0, 0]; the_matrix[0, 1] = value[0, 1]; the_matrix[0, 2] = value[0, 2];
+                the_matrix[1, 0] = value[1, 0]; the_matrix[1, 1] = value[1, 1]; the_matrix[1, 2] = value[1, 2];
+                the_matrix[2, 0] = value[2, 0]; the_matrix[2, 1] = value[2, 1]; the_matrix[2, 2] = value[2, 2];
+            }
+        }
+        /// <summary>
         /// Gets vector that represents the main diagonal of the matrix (all elements m[i,j] where i==j)
         /// </summary>
         public matrix main_diagonal
