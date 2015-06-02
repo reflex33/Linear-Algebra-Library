@@ -228,5 +228,17 @@ namespace geometry_library
             normal_y = point_to_copy.normal_y;
             normal_z = point_to_copy.normal_z;
         }
+        public point_and_normal_pair_3d(point3d point_to_copy, matrix normal_to_copy)
+        {
+            if (normal_to_copy.rows != 3 || normal_to_copy.cols != 1)
+                throw new System.ArgumentException("Normal vector must be a 3x1 matrix/vector!");
+
+            x = point_to_copy.x;
+            y = point_to_copy.y;
+            z = point_to_copy.z;
+            normal_x = normal_to_copy[0, 0];
+            normal_y = normal_to_copy[1, 0];
+            normal_z = normal_to_copy[2, 0];
+        }
     }
 }
