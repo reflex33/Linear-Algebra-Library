@@ -6,41 +6,38 @@ Library for linear algebra.  Includes sub-libraries for matrices and geometry cu
 2. Add a class for homogeneous transformation matrix?  Benefits: strong typing.  Detriments: lots of extra code.
 3. Add a class for vector/vector3d?  Benefits: strong typing.  Detriments: lots of extra code.
 
-## 6/2/2015.2
+## Changelog
+### 2015.06.02
 Added another constructor to point_and_normal_pair_3d class
-
-## 6/2/2015
 Added point_and_normal_pair_3d class
 
-## 5/25/2015
+### 2015.05.25
 Added a rotation submatrix property
 
-## 5/20/2015
+### 2015.05.20
 Added a copy constructor to the point3d and plane classes
 
-## 5/7/2015
+### 2015.05.07
 Converted function comments to xml code comments
 
-## 4/30/2015
+### 2015.04.30
 Added equals_threshold to matrix
 Added is_normalized_3d_vector to matrix
 Modified is_3d_transformation_matrix to check normalized and orthogonal vectors in addition to other checks
 Fixed a bug where normalizing a vector of all zeros was returning a value
 
-## 4/24/2015
+### 2015.04.24
 Added "distance to" point and plane
 
-## 4/23/2015
+### 2015.04.23
 Added a bracket operator to the matrix class
 
-## 4/22/2015.2
+### 2015.04.22
 Exceptionified the matrix class
-
-## 4/22/2015
 Started linear algebra rewrite.  Library will now be for concepts of linear algebra.  There will be various sub-libraries, matrices will be one of those.  Added a new sub-library for geometry.  This new library contains planes and 3d points to start.
 
-## 4/17/2015
+### 2015.04.17
 Added a "Changed" event.  This fires whenever any values of the matrix is changed.  Also added a test program.
 
-## 4/7/2015
+### 2015.04.07
 Nothing to say here... First release
