@@ -20,6 +20,17 @@ namespace test
 
             Console.WriteLine(trans.is_3d_vector);
             Console.WriteLine(trans.is_normalized_3d_vector);
+
+
+            point_and_normal_pair_3d p1 = new point_and_normal_pair_3d();
+            p1.x = 5;
+            p1.y = 6;
+            p1.z = 9;
+            p1.normal_x = -1.0;
+            p1.normal_y = 0.0;
+            p1.normal_z = 0.0;
+            point_and_normal_pair_3d p2 = new point_and_normal_pair_3d(p1);
+            Console.Write(p2.x + " " + p2.y + " " + p2.z + " " + p2.normal_x + " " + p2.normal_y + " " + p2.normal_z);
         }
     }
 }

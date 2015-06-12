@@ -209,17 +209,17 @@ namespace geometry_library
 
 
         /// <summary>
-        /// Creates a point where x=y=z=0 and the normal is 0,0,0
+        /// Creates a point/normal pair where x=y=z=0 and the normal is 0,0,0
         /// </summary>
         public point_and_normal_pair_3d() : base()
         {
             _normal_data = new matrix(3, 1);
         }
         /// <summary>
-        /// Creates a point that is a deep copy of another point
+        /// Creates a point/normal pair that is a deep copy of another point/normal
         /// </summary>
         /// <param name="point_to_copy">The point to copy</param>
-        public point_and_normal_pair_3d(point_and_normal_pair_3d point_to_copy)
+        public point_and_normal_pair_3d(point_and_normal_pair_3d point_to_copy) : this()
         {
             x = point_to_copy.x;
             y = point_to_copy.y;
@@ -228,7 +228,12 @@ namespace geometry_library
             normal_y = point_to_copy.normal_y;
             normal_z = point_to_copy.normal_z;
         }
-        public point_and_normal_pair_3d(point3d point_to_copy, matrix normal_to_copy)
+        /// <summary>
+        /// Creates a point/normal pair that is a combination and deep copy of another point and normal
+        /// </summary>
+        /// <param name="point_to_copy">The point to copy</param>
+        /// <param name="normal_to_copy">The normal to copy</param>
+        public point_and_normal_pair_3d(point3d point_to_copy, matrix normal_to_copy) : this()
         {
             if (normal_to_copy.rows != 3 || normal_to_copy.cols != 1)
                 throw new System.ArgumentException("Normal vector must be a 3x1 matrix/vector!");

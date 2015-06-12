@@ -7,6 +7,9 @@ Library for linear algebra.  Includes sub-libraries for matrices and geometry cu
 3. Add a class for vector/vector3d?  Benefits: strong typing.  Detriments: lots of extra code.
 
 ## Changelog
+### 2015.06.12
+Bug fix for point_normal_pair_3d constructors
+
 ### 2015.06.02
 Added another constructor to point_and_normal_pair_3d class
 Added point_and_normal_pair_3d class
