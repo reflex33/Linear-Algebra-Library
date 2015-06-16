@@ -135,6 +135,91 @@ namespace geometry_library
 
 
     /// <summary>
+    /// A collection of points
+    /// </summary>
+    /// <typeparam name="T">Either point3d or point_and_normal_pair_3d</typeparam>
+    public class point_3d_collection<T> : System.Collections.ObjectModel.Collection<T> where T : point3d
+    {
+        /// <summary>
+        /// The centroid of the collection points
+        /// </summary>
+        public point3d centroid
+        {
+            get
+            {
+                if (Count <= 0)
+                    throw new System.InvalidOperationException("Can't find the centroid without any points!");
+
+                double min_x = double.MaxValue;
+                double min_y = double.MaxValue;
+                double min_z = double.MaxValue;
+                double max_x = double.MinValue;
+                double max_y = double.MinValue;
+                double max_z = double.MinValue;
+
+                // Find the object centroid
+                foreach (point3d point in this)
+                {
+                    if (point.x < min_x)
+                        min_x = point.x;
+                    if (point.y < min_y)
+                        min_y = point.y;
+                    if (point.z < min_z)
+                        min_z = point.z;
+                    if (point.x > max_x)
+                        max_x = point.x;
+                    if (point.y > max_y)
+                        max_y = point.y;
+                    if (point.z > max_z)
+                        max_z = point.z;
+                }
+                point3d centroid = new point3d();
+                centroid.x = (max_x + min_x) / 2.0;
+                centroid.y = (max_y + min_y) / 2.0;
+                centroid.z = (max_z + min_z) / 2.0;
+
+                return centroid;
+            }
+        }
+        /// <summary>
+        /// The bounding box of the collection of points.  Returns a Tuple in the following
+        /// format: min_x, max_x, min_y, max_y, min_z, max_z
+        /// </summary>
+        public System.Tuple<double, double, double, double, double, double> bounding_box
+        {
+            get
+            {
+                double min_x = double.MaxValue;
+                double min_y = double.MaxValue;
+                double min_z = double.MaxValue;
+                double max_x = double.MinValue;
+                double max_y = double.MinValue;
+                double max_z = double.MinValue;
+
+                // Find the object centroid
+                foreach (point3d point in this)
+                {
+                    if (point.x < min_x)
+                        min_x = point.x;
+                    if (point.y < min_y)
+                        min_y = point.y;
+                    if (point.z < min_z)
+                        min_z = point.z;
+                    if (point.x > max_x)
+                        max_x = point.x;
+                    if (point.y > max_y)
+                        max_y = point.y;
+                    if (point.z > max_z)
+                        max_z = point.z;
+                }
+
+                return new System.Tuple<double, double, double, double, double, double>(min_x, max_x, min_y, max_y, min_z, max_z);
+            }
+        }
+    }
+
+
+    /// <summary>
     /// A 3D point with a matched normal
     /// </summary>
     public class point_and_normal_pair_3d : point3d
