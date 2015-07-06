@@ -80,6 +80,20 @@ namespace test
             Console.Write(result_c.x + " " + result_c.y + " " + result_c.z);
             Console.WriteLine();
             Console.Write(result_b.Item1 + " " + result_b.Item2 + " " + result_b.Item3 + " " + result_b.Item4 + " " + result_b.Item5 + " " + result_b.Item6);
+            Console.WriteLine();
+
+
+            Console.WriteLine();
+            matrix copy_test1 = new matrix(4);
+            matrix copy_test2 = new matrix(3, 1);
+            copy_test2[0, 0] = 0; copy_test2[1, 0] = 0; copy_test2[2, 0] = 1;
+            copy_test1.x_axis_vector = copy_test2;
+            for (int x = 0; x < copy_test1.rows; ++x)
+            {
+                for (int y = 0; y < copy_test1.cols; ++y)
+                    Console.Write(copy_test1[x, y] + " ");
+                Console.WriteLine();
+            }
         }
     }
 }

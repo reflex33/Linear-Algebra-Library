@@ -7,6 +7,9 @@ Library for linear algebra.  Includes sub-libraries for matrices and geometry cu
 3. Add a class for vector/vector3d?  Benefits: strong typing.  Detriments: lots of extra code.
 
 ## Changelog
+### 2015.07.06
+Changed copy out/in properties to new have a seperate copy property so behavior is better documented
+
 ### 2015.06.16
 Added a collection of points class, including centroid and bounding box calculations
 

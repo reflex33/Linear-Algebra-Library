@@ -7,21 +7,6 @@ namespace geometry_library
     /// </summary>
     public class point3d
     {
-        private void matrix_changed(object sender, System.EventArgs e)
-        {
-            matrix m = sender as matrix;
-            if (m == null)  // If the sender isn't a matrix, throw an exception.  Note: this should never happen
-                throw new System.ArgumentException("Unexpected sender to event matrix_changed!");
-
-            if (m.rows != 3 || m.cols != 1)
-                throw new System.ArgumentException("3D Point must be a 3x1 matrix/vector!");
-
-            x = m[0, 0];
-            y = m[1, 0];
-            z = m[2, 0];
-        }
-
-
         /// <summary>
         /// Gets/Sets the 'x' of the point
         /// </summary>
@@ -35,22 +20,10 @@ namespace geometry_library
         /// </summary>
         public double z { get; set; }
         /// <summary>
-        /// Gets/Sets the values of the point using 3x1 matrix form
-        /// Note:  You can change the values by giving a complete 3x1 vector, or you may change individual values of the resulting matrix
-        /// form.  If you change values in the matrix form, it WILL be reflected in the point.
+        /// Sets the values of the point using 3x1 matrix form
         /// </summary>
         public matrix matrix_representation
         {
-            get
-            {
-                matrix m = new matrix(3, 1);
-                m[0, 0] = x;
-                m[1, 0] = y;
-                m[2, 0] = z;
-                m.Changed += new matrix.MatrixChangedEventHandler(matrix_changed);
-
-                return m;
-            }
             set
             {
                 if (value.rows != 3 || value.cols != 1)
@@ -59,6 +32,21 @@ namespace geometry_library
                 x = value[0, 0];
                 y = value[1, 0];
                 z = value[2, 0];
+            }
+        }
+        /// <summary>
+        /// Gets the values of the point using 3x1 matrix form
+        /// </summary>
+        public matrix matrix_representation_copy
+        {
+            get
+            {
+                matrix m = new matrix(3, 1);
+                m[0, 0] = x;
+                m[1, 0] = y;
+                m[2, 0] = z;
+
+                return m;
             }
         }
 
@@ -224,21 +212,6 @@ namespace geometry_library
     /// </summary>
     public class point_and_normal_pair_3d : point3d
     {
-        private void normal_matrix_changed(object sender, System.EventArgs e)
-        {
-            matrix m = sender as matrix;
-            if (m == null)  // If the sender isn't a matrix, throw an exception.  Note: this should never happen
-                throw new System.ArgumentException("Unexpected sender to event normal_matrix_changed!");
-
-            if (m.rows != 3 || m.cols != 1)
-                throw new System.ArgumentException("Normal vector must be a 3x1 matrix/vector!");
-
-            normal_x = m[0, 0];
-            normal_y = m[1, 0];
-            normal_z = m[2, 0];
-        } 
-
-
         private matrix _normal_data;
         /// <summary>
         /// Gets/Sets the 'x' of the normal
@@ -265,22 +238,10 @@ namespace geometry_library
             set { _normal_data[2, 0] = value; }
         }
         /// <summary>
-        /// Gets/Sets the values of the normal using 3x1 matrix form
-        /// Note:  You can change the values by giving a complete 3x1 vector, or you may change individual values of the resulting matrix
-        /// form.  If you change values in the matrix form, it WILL be reflected in the normal.
+        /// Sets the values of the normal using 3x1 matrix form
         /// </summary>
         public matrix normal_matrix_representation
         {
-            get
-            {
-                matrix m = new matrix(3, 1);
-                m[0, 0] = normal_x;
-                m[1, 0] = normal_y;
-                m[2, 0] = normal_z;
-                m.Changed += new matrix.MatrixChangedEventHandler(normal_matrix_changed);
-
-                return m;
-            }
             set
             {
                 if (value.rows != 3 || value.cols != 1)
@@ -289,6 +250,21 @@ namespace geometry_library
                 normal_x = value[0, 0];
                 normal_y = value[1, 0];
                 normal_z = value[2, 0];
+            }
+        }
+        /// <summary>
+        /// Gets the values of the normal using 3x1 matrix form
+        /// </summary>
+        public matrix normal_matrix_representation_copy
+        {
+            get
+            {
+                matrix m = new matrix(3, 1);
+                m[0, 0] = normal_x;
+                m[1, 0] = normal_y;
+                m[2, 0] = normal_z;
+
+                return m;
             }
         }
 

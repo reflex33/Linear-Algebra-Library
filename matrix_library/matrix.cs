@@ -1261,19 +1261,10 @@
             }
         }
         /// <summary>
-        /// Gets/Sets the x axis vector (3x1 matrix) of a transformation matrix
-        /// Note:  You can only set this by giving a complete vector.  If you try to set an individual value in the returned vector, that value will NOT be reflected in the matrix.
+        /// Sets the x axis vector (3x1 matrix) of a transformation matrix
         /// </summary>
         public matrix x_axis_vector
         {
-            get
-            {
-                // Check if current matrix is a transformation matrix
-                if (!is_3d_transformation_matrix)
-                    throw new System.ArgumentException("Can't get an axis vector of a non 3d transformation matrix");
-
-                return sub_matrix(0, 2, 0, 0);
-            }
             set
             {
                 // Check if current matrix is a transformation matrix
@@ -1293,10 +1284,9 @@
             }
         }
         /// <summary>
-        /// Gets/Sets the y axis vector (3x1 matrix) of a transformation matrix
-        /// Note:  You can only set this by giving a complete vector.  If you try to set an individual value in the returned vector, that value will NOT be reflected in the matrix.
+        /// Gets a copy of the x axis vector (3x1 matrix) of a transformation matrix
         /// </summary>
-        public matrix y_axis_vector
+        public matrix x_axis_vector_copy
         {
             get
             {
@@ -1304,8 +1294,14 @@
                 if (!is_3d_transformation_matrix)
                     throw new System.ArgumentException("Can't get an axis vector of a non 3d transformation matrix");
 
-                return sub_matrix(0, 2, 1, 1);
+                return sub_matrix(0, 2, 0, 0);
             }
+        }
+        /// <summary>
+        /// Sets the y axis vector (3x1 matrix) of a transformation matrix
+        /// </summary>
+        public matrix y_axis_vector
+        {
             set
             {
                 // Check if current matrix is a transformation matrix
@@ -1325,10 +1321,9 @@
             }
         }
         /// <summary>
-        /// Gets/Sets the z axis vector (3x1 matrix) of a transformation matrix
-        /// Note:  You can only set this by giving a complete vector.  If you try to set an individual value in the returned vector, that value will NOT be reflected in the matrix.
+        /// Gets a copy of the y axis vector (3x1 matrix) of a transformation matrix
         /// </summary>
-        public matrix z_axis_vector
+        public matrix y_axis_vector_copy
         {
             get
             {
@@ -1336,8 +1331,14 @@
                 if (!is_3d_transformation_matrix)
                     throw new System.ArgumentException("Can't get an axis vector of a non 3d transformation matrix");
 
-                return sub_matrix(0, 2, 2, 2);
+                return sub_matrix(0, 2, 1, 1);
             }
+        }
+        /// <summary>
+        /// Sets the z axis vector (3x1 matrix) of a transformation matrix
+        /// </summary>
+        public matrix z_axis_vector
+        {
             set
             {
                 // Check if current matrix is a transformation matrix
@@ -1357,19 +1358,24 @@
             }
         }
         /// <summary>
-        /// Gets/Sets the position vector (3x1 matrix) of a transformation matrix
-        /// Note:  You can only set this by giving a complete vector.  If you try to set an individual value in the returned vector, that value will NOT be reflected in the matrix.
+        /// Gets a copy of the z axis vector (3x1 matrix) of a transformation matrix
         /// </summary>
-        public matrix position_vector
+        public matrix z_axis_vector_copy
         {
             get
             {
                 // Check if current matrix is a transformation matrix
                 if (!is_3d_transformation_matrix)
-                    throw new System.ArgumentException("Can't get position vector of a non 3d transformation matrix");
+                    throw new System.ArgumentException("Can't get an axis vector of a non 3d transformation matrix");
 
-                return sub_matrix(0, 2, 3, 3);
+                return sub_matrix(0, 2, 2, 2);
             }
+        }
+        /// <summary>
+        /// Sets the position vector (3x1 matrix) of a transformation matrix
+        /// </summary>
+        public matrix position_vector
+        {
             set
             {
                 // Check if current matrix is a transformation matrix
@@ -1389,19 +1395,24 @@
             }
         }
         /// <summary>
-        /// Gets/Sets the rotation submatrix (3x3) of a transformation matrix
-        /// Note:  You can only set this by giving a complete rotation matrix.  If you try to set an individual value in the returned matrix, that value will NOT be reflected in the matrix.
+        /// Gets a copy of the position vector (3x1 matrix) of a transformation matrix
         /// </summary>
-        public matrix rotation_submatrix
+        public matrix position_vector_copy
         {
             get
             {
-                // Check if the current matrix is a transformation matrix
+                // Check if current matrix is a transformation matrix
                 if (!is_3d_transformation_matrix)
-                    throw new System.ArgumentException("Can't get rotation submatrix of a non 3d transformation matrix");
+                    throw new System.ArgumentException("Can't get position vector of a non 3d transformation matrix");
 
-                return sub_matrix(0, 2, 0, 2);
+                return sub_matrix(0, 2, 3, 3);
             }
+        }
+        /// <summary>
+        /// Sets the rotation submatrix (3x3) of a transformation matrix
+        /// </summary>
+        public matrix rotation_submatrix
+        {
             set
             {
                 // Check if current matrix is a transformation matrix
@@ -1422,6 +1433,20 @@
                 the_matrix[0, 0] = value[0, 0]; the_matrix[0, 1] = value[0, 1]; the_matrix[0, 2] = value[0, 2];
                 the_matrix[1, 0] = value[1, 0]; the_matrix[1, 1] = value[1, 1]; the_matrix[1, 2] = value[1, 2];
                 the_matrix[2, 0] = value[2, 0]; the_matrix[2, 1] = value[2, 1]; the_matrix[2, 2] = value[2, 2];
+            }
+        }
+        /// <summary>
+        /// Gets a copy of the rotation submatrix (3x3) of a transformation matrix
+        /// </summary>
+        public matrix rotation_submatrix_copy
+        {
+            get
+            {
+                // Check if the current matrix is a transformation matrix
+                if (!is_3d_transformation_matrix)
+                    throw new System.ArgumentException("Can't get rotation submatrix of a non 3d transformation matrix");
+
+                return sub_matrix(0, 2, 0, 2);
             }
         }
         /// <summary>
