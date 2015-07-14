@@ -94,6 +94,23 @@ namespace test
                     Console.Write(copy_test1[x, y] + " ");
                 Console.WriteLine();
             }
+
+
+            Console.WriteLine();
+            matrix vector_align_test1 = new matrix(3, 1);
+            vector_align_test1[0, 0] = 3;
+            vector_align_test1[1, 0] = 8;
+            vector_align_test1[2, 0] = -2;
+            matrix vector_align_test2 = new matrix(3, 1);
+            vector_align_test2[0, 0] = -1;
+            vector_align_test2[1, 0] = 2.3;
+            vector_align_test2[2, 0] = 3;
+            matrix vector_aling_test2_n = matrix.normalize(vector_align_test2);
+            matrix vector_align_test_result = matrix.rotation_to_align_vectors(vector_align_test1, vector_align_test2);
+            matrix vector_align_test_result_vector = matrix.normalize(vector_align_test_result * vector_align_test1);
+            Console.Write(vector_aling_test2_n[0, 0] + " " + vector_aling_test2_n[1, 0] + " " + vector_aling_test2_n[2, 0]); Console.WriteLine();
+            Console.Write(vector_align_test_result_vector[0, 0] + " " + vector_align_test_result_vector[1, 0] + " " + vector_align_test_result_vector[2, 0]);
+            Console.WriteLine();
         }
     }
 }

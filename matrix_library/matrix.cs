@@ -1941,5 +1941,34 @@
 
             return a.inverse() * b;
         }
+        /// <summary>
+        /// Finds a rotation matrix (3x3) that rotates the starting vector to be equal to the target vector
+        /// </summary>
+        /// <param name="starting">The vector which will be rotated</param>
+        /// <param name="target">The desired ending vector</param>
+        /// <returns>A 3x3 rotation matrix</returns>
+        public static matrix rotation_to_align_vectors(matrix starting, matrix target)
+        {
+            // Check for proper input data sizes
+            if (!starting.is_3d_vector || !target.is_3d_vector)
+                throw new System.ArgumentException("Can't find a rotation between non 3d vectors");
+
+            // Normalize the vectors
+            matrix starting_n = matrix.normalize(starting);
+            matrix target_n = matrix.normalize(target);
+
+            matrix v = matrix.cross_product(starting_n, target_n);
+            double s = matrix.magnitude(v);
+            double c = matrix.dot_product(starting_n, target_n);
+
+            matrix v_x = new matrix(3, 3);
+            v_x[0, 0] = 0;         v_x[0, 1] = -v[2, 0];   v_x[0, 2] = v[1, 0];
+            v_x[1, 0] = v[2, 0];   v_x[1, 1] = 0;          v_x[1, 2] = -v[0, 0];
+            v_x[2, 0] = -v[1, 0];  v_x[2, 1] = v[0, 0];    v_x[2, 2] = 0;
+
+            matrix result = new matrix(3) + v_x + (v_x * v_x).element_multiply((1 - c) / (s * s));
+
+            return result;
+        }
     }
 }
