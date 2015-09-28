@@ -7,6 +7,9 @@ Library for linear algebra.  Includes sub-libraries for matrices and geometry cu
 3. Add a class for vector/vector3d?  Benefits: strong typing.  Detriments: lots of extra code.
 
 ## Changelog
+### 2015.09.28
+Added a distance to point function
+
 ### 2015.07.14
 Added rotation_to_align_vectors
 

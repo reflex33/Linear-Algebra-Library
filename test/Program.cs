@@ -111,6 +111,19 @@ namespace test
             Console.Write(vector_aling_test2_n[0, 0] + " " + vector_aling_test2_n[1, 0] + " " + vector_aling_test2_n[2, 0]); Console.WriteLine();
             Console.Write(vector_align_test_result_vector[0, 0] + " " + vector_align_test_result_vector[1, 0] + " " + vector_align_test_result_vector[2, 0]);
             Console.WriteLine();
+
+
+            Console.WriteLine();
+            point3d distance_test_p1 = new point3d();
+            distance_test_p1.x = -4;
+            distance_test_p1.y = 2;
+            distance_test_p1.z = 10.2;
+            point3d distance_test_p2 = new point3d();
+            distance_test_p2.x = 3;
+            distance_test_p2.y = 1.4;
+            distance_test_p2.z = 21.8;
+            Console.WriteLine(distance_test_p1.distance_to(distance_test_p2));
+            Console.WriteLine();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using matrix_library;
+﻿using System;
+using matrix_library;
 
 namespace geometry_library
 {
@@ -97,6 +98,17 @@ namespace geometry_library
         public double distance_to(plane p)
         {
             return (p.a * x + p.b * y + p.c * z + p.d) / System.Math.Sqrt(p.a * p.a + p.b * p.b + p.c * p.c);
+        }
+
+
+        /// <summary>
+        /// Determines the distance from one point to another
+        /// </summary>
+        /// <param name="p">The other point</param>
+        /// <returns>The distance</returns>
+        public double distance_to(point3d p)
+        {
+            return Math.Sqrt(Math.Pow(p.x - x, 2) + Math.Pow(p.y - y, 2) + Math.Pow(p.z - z, 2));
         }
 
 
